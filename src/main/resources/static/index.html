@@ -94,6 +94,19 @@
             text-align: center;
             color: #ffffff;
         }
+
+        .titlearea{
+            font-weight:bold ;
+            font-size:12pt;
+            padding-left: 20px;
+            padding-top: 10px;
+            height: 40px;
+            width: 580px;
+        }
+        .titlearea .edit{
+            display: none;
+        }
+
         input.form-control {
             border-radius: 5px;
             background-color: #ffffff;
@@ -124,9 +137,21 @@
             resize: none;
         }
 
-        textarea.field::placeholder {
-            width: 216px;
-            height: 16px;
+        /*textarea.field::placeholder {*/
+        /*    width: 216px;*/
+        /*    height: 16px;*/
+        /*    font-family: 'Noto Sans KR', sans-serif;*/
+        /*    font-size: 16px;*/
+        /*    font-weight: normal;*/
+        /*    font-stretch: normal;*/
+        /*    font-style: normal;*/
+        /*    line-height: 1;*/
+        /*    letter-spacing: -0.96px;*/
+        /*    text-align: left;*/
+        /*    color: #868e96;*/
+        /*}*/
+
+        ::placeholder {
             font-family: 'Noto Sans KR', sans-serif;
             font-size: 16px;
             font-weight: normal;
@@ -144,6 +169,10 @@
             background-color: #ffffff;
             margin-bottom: 12px;
         }
+        .card .authordate{
+            width: 478px;
+            height: 30px;
+        }
 
         .card .metadata {
             position: relative;
@@ -157,9 +186,9 @@
             letter-spacing: -0.77px;
             text-align: left;
             color: #000000;
-            height: 14px;
+            height: 40px;
             padding: 10px 23px;
-            margin-bottom: 20px;
+            margin-bottom: 4px;
         }
 
         .card .metadata .date {
@@ -174,6 +203,10 @@
             padding: 0px 23px;
             word-wrap: break-word;
             word-break: break-all;
+        }
+
+        titlearea .edit{
+            height: 30px;
         }
 
         .card .metadata .edit {
@@ -201,13 +234,33 @@
             border-left: none;
             resize: none;
             border-bottom: 1px solid #212529;
-            width: 80%;
+            width: 66%;
             font-family: 'Spoqa Han Sans';
         }
 
         .contents div.edit {
             display: none;
         }
+        .title-edit{
+            border-right: none;
+            border-top: none;
+            border-left: none;
+            resize: none;
+            border-bottom: 1px solid #212529;
+            width: 494px;
+            font-family: 'Spoqa Han Sans';
+        }
+
+        .author-edit{
+            border-right: none;
+            border-top: none;
+            border-left: none;
+            resize: none;
+            border-bottom: 1px solid #212529;
+            width: 100%;
+            font-family: 'Spoqa Han Sans';
+        }
+
 
         .contents textarea.te-edit {
             border-right: none;
@@ -218,6 +271,8 @@
             width: 100%;
             font-family: 'Spoqa Han Sans';
         }
+
+
 
 
         .footer {
@@ -252,6 +307,14 @@
             width: 14px;
             height: 18px;
         }
+        .btn-light{
+            display: none;
+            color: #000000;
+            background-color: #ffffff;
+            border-color: #727272;
+            border-radius: 10px 10px 10px 10px;
+            border-inline-width: 3px;
+        }
 
         #cards-box {
             margin-top: 12px;
@@ -277,9 +340,9 @@
             showEdits(id);
             let contents = $(`#${id}-contents`).text().trim();
             $(`#${id}-textarea`).val(contents);
-            let title = $(`#${id}-title`).text().trim();
+            let title = $(`#${id}-titleprevious`).text().trim();
             $(`#${id}-title`).val(title);
-            let author = $(`#${id}-author`).text().trim();
+            let author = $(`#${id}-authorprevious`).text().trim();
             $(`#${id}-author`).val(author);
         }
 
@@ -290,28 +353,19 @@
             $(`#${id}-submit`).show();
             $(`#${id}-delete`).show();
             $(`#${id}-passwordarea`).show();
+            $('#btn-light').show();
 
 
             $(`#${id}-author`).show();
             $(`#${id}-password`).show();
 
+
+            $(`#${id}-authorprevious`).hide();
+            $(`#${id}-titleprevious`).hide();
             $(`#${id}-contents`).hide();
             $(`#${id}-edit`).hide();
         }
 
-        function hideEdits(id) {
-            $(`#${id}-editarea`).hide();
-            $(`#${id}-editauthor`).hide();
-            $(`#${id}-edittitle`).hide();
-            $(`#${id}-submit`).hide();
-            $(`#${id}-delete`).hide();
-
-            $(`#${id}-author`).hide();
-            $(`#${id}-password`).hide();
-
-            $(`#${id}-contents`).show();
-            $(`#${id}-edit`).show();
-        }
 
         $(document).ready(function () {
             getMessages();
@@ -330,8 +384,11 @@
                 data: JSON.stringify(data),
                 success: function (response) {
                     if (response == false) {
-                        return false;
-                    }else {return true;}
+                        alert("비밀번호가 틀립니다.");
+                        return;
+                    }else {
+                        alert("비밀번호가 일치합니다.");
+                    }
                 }
             });
         }
@@ -358,23 +415,29 @@
 
         // 메모 하나를 HTML로 만들어서 body 태그 내 원하는 곳에 붙입니다.
         function addHTML(id, author, title, contents, createdAt) {
-            let tempHtml = `<div class="card">
+            let tempHtml = `
+            <div class="card">
                 <!-- date/author 영역 -->
-                <div class="metadata">
-                    <div class="date">
-                        "날짜" <br>${createdAt}
-                    </div>
-                    <div id="${id}-authorprevious" class="authorprevious">
-                        "작성자" <br>${author}
-                    </div>
-                    <div id="${id}-editauthor" class="edit">
-                        <textarea id="${id}-author" class="author-edit" placeholder="작성자" cols="7" rows="1"></textarea>
-                    </div>
+                <div class="titlearea">
                     <div id="${id}-titleprevious" class="titleprevious">
-                        "제목" <br>${title}
+                       제목:${title}
                     </div>
-                    <div id="${id}-edittitle" class="edit">
-                        <textarea id="${id}-title" class="title-edit" placeholder="제목" cols="22" rows="1""></textarea>
+                    <div id="${id}-edittitle" class="edit" style="height: 30px">
+                        <textarea id="${id}-title" class="title-edit" placeholder="제목" cols="14" rows="1""></textarea>
+                    </div>
+                </div>
+                <div class="metadata">
+                    <div class="authordate">
+                        <div id="${id}-authorprevious" class="authorprevious" style="float: left; width:20%">
+                            작성자  :  ${author}
+                        </div>
+                        <div id="${id}-editauthor" class="edit" style="float: left; width:20%">
+                            <textarea id="${id}-author" class="author-edit" style="height:20px" placeholder="작성자" cols="7" rows="1"></textarea>
+                        </div>
+                        <div style="float: left; width:15%"></div>
+                        <div class="date" style="float: left; width:65%">
+                            등록일시 : ${createdAt}
+                        </div>
                     </div>
                 </div>
 
@@ -391,9 +454,8 @@
                     <div class="footer">
                         <div class="${id}-passwordarea">
                             <div class="col-auto">
-        <!--                        <label for="${id}-password" class="visually-hidden">Password</label>-->
-        <!--                        -->
                                 <input type="password" class="passwordclass" id="${id}-password" placeholder="Password">
+                                <button type="button" id="btn-light" class="btn-light" onclick="passwordCheck('${id}')">확인</button>
                             </div>
                         </div>
                         <img id="${id}-edit" class="icon-start-edit" src="images/edit.png" alt="" onclick="editPost('${id}')">
@@ -535,21 +597,27 @@
 
     <div id="cards-box" class="area-read">
         <div class="card">
-            <div class="metadata">
-                <div class="date">
-                    "날짜" <br>${createdAt}
-                </div>
-                <div id="${id}-authorprevious" class="authorprevious">
-                    "작성자" <br> ${author}
-                </div>
-                <div id="${id}-editauthor" class="edit">
-                    <textarea id="${id}-author" class="te-edit" cols="7" rows="1"></textarea>
-                </div>
+            <!-- date/author 영역 -->
+            <div class="titlearea">
                 <div id="${id}-titleprevious" class="titleprevious">
-                    "제목" <br>${title}
+                    ${title}
                 </div>
                 <div id="${id}-edittitle" class="edit">
-                    <textarea id="${id}-title" class="te-edit" cols="22" rows="1"></textarea>
+                    <textarea id="${id}-title" class="title-edit" placeholder="제목" cols="22" rows="1""></textarea>
+                </div>
+            </div>
+            <div class="metadata">
+                <div class="authordate">
+                    <div id="${id}-authorprevious" class="authorprevious">
+                        ${author}
+                    </div>
+                    <div id="${id}-editauthor" class="edit">
+                        <textarea id="${id}-author" class="author-edit" placeholder="작성자" cols="7" rows="1"></textarea>
+                    </div>
+                    등록일시 :
+                    <div class="date">
+                        ${createdAt}
+                    </div>
                 </div>
             </div>
 
@@ -566,10 +634,10 @@
             <div class="footer">
                 <div class="${id}-passwordarea">
                     <div class="col-auto">
-                        <!--                        <label for="${id}-password" class="visually-hidden">Password</label>-->
-                        <!--                        -->
                         <input type="password" class="passwordclass" id="${id}-password" placeholder="Password">
                     </div>
+
+                    <button type="button" class="btn btn-light" onclick="passwordCheck('${id}')">비밀번호 확인</button>
                 </div>
                 <img id="${id}-edit" class="icon-start-edit" src="images/edit.png" alt="" onclick="editPost('${id}')">
                 <img id="${id}-delete" class="icon-delete" src="images/delete.png" alt="" onclick="deleteOne('${id}')">
