@@ -1,7 +1,8 @@
 # springProject-1
 
 ## Use Case
-![image](https://user-images.githubusercontent.com/108917552/180765254-8a108db5-c81b-434f-b884-7763ed757db0.png)
+![image](https://user-images.githubusercontent.com/108917552/180946248-e7096017-c97d-41b9-a405-723994dc5fa9.png)
+
 
 ---
 ## API 명세서
