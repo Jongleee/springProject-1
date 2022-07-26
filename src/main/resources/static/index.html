@@ -379,7 +379,7 @@
             // 5. POST /api/post/password/${id}에 data를 전달합니다.
             $.ajax({
                 type: "POST",
-                url: `/api/post/password/${id}`,
+                url: `/api/post/${id}`,
                 contentType: "application/json", // JSON 형식으로 전달함을 알리기
                 data: JSON.stringify(data),
                 success: function (response) {
@@ -414,7 +414,7 @@
         }
 
         // 메모 하나를 HTML로 만들어서 body 태그 내 원하는 곳에 붙입니다.
-        function addHTML(id, author, title, contents, createdAt) {
+        function addHTML(id, author, contents, title, createdAt) {
             let tempHtml = `
             <div class="card">
                 <!-- date/author 영역 -->
@@ -508,11 +508,11 @@
                 return;
             }
                 // // 3. 전달할 data JSON으로 만듭니다.
-                let data = {'author': author, 'contents': contents, 'password': password, 'title': title};
+                let data = {'contents': contents, 'author': author,  'password': password, 'title': title};
                 // 4. PUT /api/post/{id} 에 data를 전달합니다.
                 $.ajax({
                     type: "PUT",
-                    url: `/api/post/${id}`,
+                    url: `/api/post/password/${id}`,
                     contentType: "application/json",
                     data: JSON.stringify(data),
                     success: function (response) {
@@ -540,7 +540,7 @@
             }
             $.ajax({
                 type: "DELETE",
-                url: `/api/post/${id}`,
+                url: `/api/post/password/${id}`,
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (response) {
@@ -603,7 +603,7 @@
                     ${title}
                 </div>
                 <div id="${id}-edittitle" class="edit">
-                    <textarea id="${id}-title" class="title-edit" placeholder="제목" cols="22" rows="1""></textarea>
+                    <textarea id="${id}-title" class="title-edit" placeholder="제목" cols="22" rows="1"></textarea>
                 </div>
             </div>
             <div class="metadata">
