@@ -35,6 +35,7 @@
 
 #### 종속성 주입 X
 - SpringProject1Application의 @springBootApplication
+- 종속성 주입이 되지 않았으므로 빈의 형태를 갖고 있지만 빈이라고 볼 수는 없습니다.
 ---
 ### 6. API 명세서 작성 가이드라인을 검색하여 직접 작성한 명세서와 비교해보세요!
 
