@@ -6,12 +6,12 @@
 ---
 ## API 명세서
 
-![image](https://user-images.githubusercontent.com/108917552/180771745-5105896f-3962-495c-94c5-26b1bc4714f3.png)
-
+![image](https://user-images.githubusercontent.com/108917552/180935568-3f397025-2770-4aaa-b516-cb7d0f085866.png)
+ - 해당 명세에서 두개씩 있는 부분 중 URL에 password가 포함된 것들은 HTML 기능 구현에 사용된 부분입니다.
 ---
 ### 1.수정, 삭제 API의 request를 어떤 방식으로 사용하셨나요? (param, query, body)
 
-- body를 사용했습니다. 나머지 둘은 정보가 주소표시줄에 표시되어 패스워드가 포함된 API에 적합하지 않기 때문입니다.
+- body를 사용했습니다. 나머지 둘은 정보가 주소표시줄에 표시되어 패스워드가 포함된 API에서 패스워드가 주소창에 노출되기 때문에 적합하지 않다고 생각했기 때문입니다.
 ---
 ### 2. 어떤 상황에 어떤 방식의 request를 써야하나요?
 - 조회는 GET, 작성은 POST, 수정은 PUT, 삭제는 DELETE를 써야합니다.
