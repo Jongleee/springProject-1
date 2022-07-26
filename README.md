@@ -5,8 +5,7 @@
 
 ---
 ## API 명세서
-
-![image](https://user-images.githubusercontent.com/108917552/180935568-3f397025-2770-4aaa-b516-cb7d0f085866.png)
+![image](https://user-images.githubusercontent.com/108917552/180944553-a785ff7c-acb0-47fb-8f36-b8a644fb7dcd.png)
  - 해당 명세에서 두개씩 있는 부분 중 URL에 password가 포함된 것들은 HTML 기능 구현에 사용된 부분입니다.
 ---
 ### 1.수정, 삭제 API의 request를 어떤 방식으로 사용하셨나요? (param, query, body)
@@ -29,8 +28,12 @@
 - 각자의 역할에 맞추어 단계를 나누어 분배하였습니다.
 ---
 ### 5. 작성한 코드에서 빈(Bean)을 모두 찾아보세요!
+#### 종속성 주입 O
+ - PostService의 @Service
+- PostController의 @RestController
 
-
+#### 종속성 주입 X
+- SpringProject1Application의 @springBootApplication
 ---
 ### 6. API 명세서 작성 가이드라인을 검색하여 직접 작성한 명세서와 비교해보세요!
 
