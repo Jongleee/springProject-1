@@ -353,7 +353,7 @@
             $(`#${id}-submit`).show();
             $(`#${id}-delete`).show();
             $(`#${id}-passwordarea`).show();
-            $('#btn-light').show();
+            $(`#${id}-btn-light`).show();
 
 
             $(`#${id}-author`).show();
@@ -455,7 +455,7 @@
                         <div class="${id}-passwordarea">
                             <div class="col-auto">
                                 <input type="password" class="passwordclass" id="${id}-password" placeholder="Password">
-                                <button type="button" id="btn-light" class="btn-light" onclick="passwordCheck('${id}')">확인</button>
+                                <button type="button" id="${id}-btn-light" class="btn-light" onclick="passwordCheck('${id}')">확인</button>
                             </div>
                         </div>
                         <img id="${id}-edit" class="icon-start-edit" src="images/edit.png" alt="" onclick="editPost('${id}')">
